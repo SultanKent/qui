@@ -1233,6 +1233,7 @@ const questions = [
 
 let currentQuestionIndex = 0;
 let shuffledQuestions = [];
+let consecutiveCorrectCount = 0; // Track consecutive correct answers
 
 // Shuffle an array
 function shuffleArray(array) {
@@ -1270,14 +1271,19 @@ function loadQuestion() {
   if (question.chartData) {
     renderChart(question.chartData);
   }
+
+  // Update consecutive correct count on the page
+  document.getElementById("correct-count").innerText = `Правильных ответов: ${consecutiveCorrectCount}`;
 }
 
 // Check the selected answer
 function checkAnswer(selectedOption, correctAnswer) {
   if (selectedOption === correctAnswer) {
     alert("Правильно!");
+    consecutiveCorrectCount++; // Increment the count for correct answer
   } else {
     alert(`Неправильно лох иди учи уроки. Правильный ответ: ${correctAnswer}`);
+    consecutiveCorrectCount = 0; // Reset the count for wrong answer
   }
 
   currentQuestionIndex = (currentQuestionIndex + 1) % shuffledQuestions.length;
@@ -1309,5 +1315,8 @@ document.getElementById("next-button").addEventListener("click", loadQuestion);
 
 // Initialize quiz
 loadQuestion();
+
+
+  
 
   
